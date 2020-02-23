@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Material Design for Bootstrap fonts and icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+
+    <!-- Material Design for Bootstrap CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <!-- select to -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+    <!-- <title>Hello, world!</title> -->
+  </head>
+  <body>
+       
+<div class="container">
+  
+    <form class="col s12" action="/cartoon" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+          <tr>
+              <td >
+                  <label for="user image">Profile Picture</label><br>
+                   <input  type="file" name="cmage" placeholder="your profile picture" class=".form-control-file">
+              </td>
+          </tr>    
+       </div>
+      <div class="form-group">
+              <label for="exampleInputEmail1">Caption:</label>
+              <input type="text" class="form-control" id="" name="Caption"  placeholder="Enter caption">
+            </div>     
+            <div class="form-group">
+                <label for="exampleInputEmail1">Author</label>
+                <input type="email" class="form-control" name="Author" placeholder="Enter author">
+              </div>      
+              <div class="form-group">
+                  <label for="exampleInputEmail1">Publication</label>
+                  <input type="email" class="form-control" name="Publication" placeholder="Enter publication">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Tags</label>
+                    <select class="form-control" multiple="multiple">
+                      </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Details</label>
+                    <textarea name="content" id="editor" class="materialize-textarea" rows="5"></textarea>
+
+                </div>
+                <div class="form-group last">            
+                    <button type="submit" class="btn btn-success" name="submit" id="submit"> submit</button></div>     
+                           
+                   </div>
+        </form>
+
+</div>
+<script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+          <!-- editor -->
+          <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
+          <script src="https://cdn.ckeditor.com/ckeditor5/[version.number]/[distribution]/ckeditor.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".form-control").select2({
+              tags: true,
+              tokenSeparators: [',', ' ']
+            });
+            $('.datepicker').pickadate({
+              selectMonths: true, // Creates a dropdown to control month
+              selectYears: 15 // Creates a dropdown of 15 years to control year
+            });
+          });
+      </script>
+    <script>
+        ClassicEditor
+          .create( document.querySelector( '#editor' ) )
+          .then( editor => {
+            console.log( editor );
+          } )
+          .catch( error => {
+            console.error( error );
+          } );
+      </script>
+  </body>
+</html>

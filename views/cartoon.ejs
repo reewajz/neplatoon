@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" />
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- editor -->
+  <style>
+    img {
+        max-width: 180px;
+      }
+      input[type='file'] {
+        padding: 5px;
+        background: #2d2d2d;
+      }
+      .nav-wrapper {
+    background-color: #404040;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  /* for select2 */
+  
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper">
+          
+          <ul class="right hide-on-med-and-down">
+            <li><a href="/index">Home </a></li>
+            <li><a href="/insertsetting">InsertSetting </a></li>
+       
+          </ul>
+        </div>
+      </nav>
+  <div class="container">
+    <h4>Cartoon Details Page</h4>
+    <font size="4" color="#ff480082">
+      <%= typeof msg!= 'undefined' ? msg:'' %>
+    </font>
+    <div class="row">
+      <form class="col s12" action="/insertcartoon" method="POST" enctype="multipart/form-data">
+
+        <table>
+            <tr>
+                <td>
+      
+                  <div class="row file-field input-field">
+                    <div class="btn">
+                      <span>Cartoon:</span>
+                      <input type="file" name="cimage" onchange="readURL(this);"/>
+                    </div>
+                    <div class="file-path-wrapper col s2">
+                      <input class="file-path validate" placeholder="insert image here"/>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <img id="blah" src="<%= typeof data!= 'undefined' ? data.Image:'' %>" alt="" class="class=" responsive-img />
+                </td>
+              </tr>
+        </table>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="text" type="text" class="validate" name="Caption" length="150" value="<%= typeof data!= 'undefined' ? data.Caption:'' %>" />
+            <label for="" data-error="wrong" data-success="right">Caption:</label>
+          </div>
+        </div>
+        <div class="row">
+        
+          <div class="input-field col s12">
+            <input type="date" class="datepicker" name="PublishedDate" value="<%=typeof data!= 'undefined' ? data.PublishedDate:'' %>"/>
+            <label for="" data-error="wrong" data-success="right">Published Date:</label>
+          </div>
+        </div>
+        <div class="row">
+            <label>Tags:</label>
+            <div class="input-field col s12">
+              <select id="tagSelect" multiple="multiple" name="Tags" > 
+                <%if(typeof data!='undefined'&& data.Tags!=null){ %>
+                <%for(var k=0;k<data.Tags.length;k++){ %>
+             <option selected="selected"><%=data.Tags[k]%></option>
+             
+             <%}%>
+             <%}%>
+            </select>
+            </div>
+          </div>
+          <div class="row">
+             <div class="input-field col s6">
+               
+                <select class="browser-default" name="Author">
+                <option value="" disabled selected>Authors Name:</option>
+                if(typeof sdata!='undefined' && sdata){
+                  <% for(var i=0;i<sdata.length;i++){%>
+                    <%if(sdata[i].Type=='Author'){%>
+                   <option value="<%=sdata[i].Name%>"><%=sdata[i].Name%></option>
+                    <%}%>
+                    <%}%>
+                }
+                <option selected hidden value="<%=typeof data!='undefined' ? data.Author :'' %>"><%=typeof data!='undefined' ? data.Author :'' %></option>
+
+              </select>
+             </div>
+             <div class="input-field col s6">
+                <select class="browser-default" name="Publication">
+                    <option value="" disabled selected>Publications Name:</option>
+                      <% for(var i=0;i<sdata.length;i++){%>
+                        <%if(sdata[i].Type=='Publication'){%>
+                       <option value="<%=sdata[i].Name%>"><%=sdata[i].Name%></option>
+                        <%}%>
+                        <%}%>
+                    <option selected hidden value="<%=typeof data!='undefined' ? data.Publication :'' %>"><%=typeof data!='undefined' ? data.Publication :'' %></option>
+                  </select>
+              </div>   
+            </div>
+   
+        <div class="row">
+            <label for="" data-error="wrong" data-success="right">Details::</label>
+          <textarea name="Details" id="editor"></textarea>
+        </div>
+        <input type="hidden" name="id" value="<%= typeof data!= 'undefined' ? data._id:'' %>">
+
+        <div class="row">
+          <button class="btn waves-effect waves-light" type="submit">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+  <!-- <script type="text/javascript" src="js/materialize.min.js"></script> -->
+
+  <!-- editor -->
+  <script src="https://cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('select#tagSelect').select2({
+        tags: true,
+        tokenSeparators: [',', ' ']
+      });
+      $('.datepicker').pickadate({
+        selectMonths: true, 
+        selectYears: 15 
+      });
+    });
+  </script>
+  <script>
+
+   CKEDITOR.replace('Details');
+   var details=`<%-typeof data!= 'undefined' ? data.Details:'' %>`;
+   CKEDITOR.instances['editor'].setData(details);
+      
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $('#blah').attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
+</body>
+
+</html>

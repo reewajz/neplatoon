@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" />
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+
+    <div class="container">
+        <h4>Notification Details</h4>
+        <font size="4" color="#ff480082">
+            <%= typeof msg!= 'undefined' ? msg:'' %>
+        </font>
+        <div class="row">
+            <form class="col s12" action="/notification/sendnotification" method="POST" >
+
+                <div class="row">
+                        <div class="input-field col s12">
+                                <select class="browser-default" name="topics">
+                                  <option value="" disabled selected>Topics:</option>
+                                  <option value="all-android">all-android</option>
+                                  <option value="all-ios">all-ios</option>
+                                </select>
+                              </div>
+                   </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="text" type="text" class="validate" name="title" required/>
+                        <label for="" data-error="wrong" data-success="right">Title:</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="text" type="text" class="validate" name="message" required/>
+                        <label for="" data-error="wrong" data-success="right">Message:</label>
+                    </div>
+                </div>
+            
+             
+                <div class="row">
+                    <button class="btn waves-effect waves-light" type="submit">
+                        Send
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <!-- <script type="text/javascript" src="js/materialize.min.js"></script> -->
+
+    <!-- editor -->
+    <script>
+   
+    </script>
+</body>
+
+</html>

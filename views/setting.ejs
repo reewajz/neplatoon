@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" />
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+  <style>
+     .nav-wrapper {
+    background-color: #404040;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper">
+          
+          <ul class="right hide-on-med-and-down">
+            <li><a href="/settingIndex">Home </a></li>
+            <li><a href="/insertcartoon">InsertCartoon </a></li>
+       
+          </ul>
+        </div>
+      </nav>
+  <div class="container">
+    <h4>Setting Details Page</h4>
+    <font size="4" color="#ff480082">
+    <%= typeof msg!= 'undefined' ? msg:'' %></font>
+    <div class="row">
+      <form class="col s12" action="/insertsetting" method="POST">
+        <div class="row">
+            <label>Type</label>
+            <select class="browser-default" name="Type"> 
+              <option value="" disabled selected><%=typeof data!='undefined' ? data.Type: 'Type:' %></option>
+              <option value="Author">Author</option>
+              <option hidden selected><%=typeof data!='undefined' ? data.Type: '' %></option>
+              <option value="Publication">Publication</option>
+            </select>
+          </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="text" type="text" class="validate" name="Name" value="<%=typeof data!='undefined' ? data.Name:'' %>"/>
+            <label for="" data-error="wrong" data-success="right">Name::</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="text" type="email" class="validate" name="Email" value="<%=typeof data!='undefined' ? data.Email:'' %>" />
+            <label for="" data-error="wrong" data-success="right">Email:</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="text" type="text" class="validate" name="Address" value="<%=typeof data!='undefined' ? data.Address:'' %>" />
+            <label for="" data-error="wrong" data-success="right">Address:</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="text" type="number" class="validate" name="Phone" value="<%=typeof data!='undefined' ? data.Phone:'' %>" />
+            <label for="" data-error="wrong" data-success="right">Phone:</label>
+          </div>
+        </div>
+        <input type="hidden" name="id" value="<%=typeof data!='undefined' ? data._id:'' %>">
+        <div class="row">
+          <button class="btn waves-effect waves-light" type="submit">Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+  <!-- <script type="text/javascript" src="js/materialize.min.js"></script> -->
+  <script>
+    $(document).ready(function () {
+      // $('select').formSelect();
+    });
+  </script>
+</body>
+
+</html>

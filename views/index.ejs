@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"/> -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <!-- icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- datatables -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+</head>
+
+<body>
+
+    
+    <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/index">
+              <i class="material-icons large">home</i>
+              </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/insertCartoon">
+             
+              InsertCartoon
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/insertsetting">
+             
+              InsertSetting
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="/settingIndex">
+              SettingHome
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav><br/>
+    
+
+  <table id="example" class="table table-hover" style="width:100%">
+    <thead class="table-active">
+      <tr>
+        <th>Caption</th>
+        <th>Inserted DT</th>
+        <th>Tags</th>
+        <th>Author</th>
+        <th>Publication</th>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      <%for(var i=0;i<data.length;i++){ %>
+      <tr>
+
+        <td>
+          <%=data[i].Caption%>
+        </td>
+        <td>
+          <%=data[i].InsertedDT%>
+        </td>
+        <td>
+          <%=data[i].Tags%>
+        </td>
+        <td>
+          <%=data[i].Author %>
+        </td>
+        <td>
+          <%=data[i].Publication %>
+        </td>
+        <td><i class="material-icons right" id="delete">delete</i><a href="/insertcartoon/<%=data[i]._id%>"> <i class="material-icons right">create</i></a>
+        </td>
+      </tr>
+      <%}%>
+
+    </tbody>
+  </table>
+
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <%if(typeof data!='undefined' && pages){%>
+      <%for(var i=1;i<= pages;i++){%>
+      <li class="page-item"><a class="page-link" href="/index/<%=i%>">
+          <%=i%></a></li>
+      <%}%>
+      <%}%>
+
+    </ul>
+  </nav>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+  <!-- datatables -->
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.19/pagination/scrolling.js"></script>
+  <script>
+
+    $(document).ready(function () {
+      $('table tr td #delete').on('click',function(event){
+      });
+
+      $('#example thead tr').clone(true).appendTo('#example thead');
+      $('#example thead tr:eq(1) th').each(function (i) {
+        var title = $(this).text();
+        $(this).html('<input type="text" placeholder="Search ' + title + '" id="'+title+'"/>');
+
+        $('input', this).on('keyup', function (event) {
+          // if(this.value.length>=3){
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+          // }
+          
+          if (event.keyCode == 13) {
+            if (this.value.length >= 3) {
+
+              var c=$('#Caption').val();
+              var t=$('#Tags').val();
+              var a=$('#Author').val();
+              var p=$('#Publication').val();
+
+              $.ajax({
+                url: '/index/search/',
+                type: 'POST',
+                data: { caption:c,tags:t,author:a, publication:p },
+                cache: false,
+                success: function (d) {
+                  var html = ``;
+                  if (d.data) {
+                    for (var i = 0; i < d.data.length; i++) {
+                      html += `<tr>
+        <td>
+          ${d.data[i].Caption}
+        </td>
+        <td>
+          ${d.data[i].InsertedDT}
+        </td>
+        <td>
+          ${d.data[i].Tags}
+        </td>
+        <td>
+          ${d.data[i].Author} 
+        </td>
+        <td>
+          ${d.data[i].Publication} 
+        </td>
+        <td><i class="material-icons right">delete</i><a href="/insertcartoon/${d.data[i]._id}"> <i class="material-icons right">create</i></a>
+        </td>
+      </tr>`;
+                    }
+                  }
+                  $('tbody').html(html);
+                }
+              });
+            }
+          }
+         
+  
+        });
+      });
+
+      var table = $('#example').DataTable({
+        orderCellsTop: true,
+        fixedHeader: true,
+        "info": false,
+        "paging": false,
+
+      });
+
+
+    });
+  </script>
+</body>
+
+</html>
